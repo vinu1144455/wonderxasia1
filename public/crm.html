@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Export CRM & Trade Lead Desk — Wonderxasia</title>
+  <meta name="description" content="Centralized B2B export CRM portal for managing global trade inquiries, buyers, status pipelines, proforma values, and export documentation." />
+  
+  <!-- Google Fonts: Montserrat + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+
+  <style>
+    /* =========================================================
+       CRM PORTAL STYLES (MATCHING WONDERX LUXURY DARK/GOLD BRAND)
+       ========================================================= */
+    :root {
+      --crm-bg: #0d0f12;
+      --crm-surface: #14171d;
+      --crm-surface-hover: #1b2028;
+      --crm-border: rgba(255, 255, 255, 0.08);
+      --crm-border-gold: rgba(254, 204, 0, 0.35);
+      --crm-text: #e2e8f0;
+      --crm-muted: #94a3b8;
+      --crm-gold: #fecc00;
+      --crm-emerald: #10b981;
+      --crm-blue: #38bdf8;
+      --crm-rose: #f43f5e;
+      --crm-amber: #f59e0b;
+      --crm-purple: #a855f7;
+    }
+
+    body.crm-body {
+      background-color: var(--crm-bg);
+      color: var(--crm-text);
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top CRM Header */
+    .crm-navbar {
+      background: #090a0d;
+      border-bottom: 1px solid var(--crm-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .crm-navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .crm-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .crm-brand img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .crm-badge-tag {
+      background: rgba(254, 204, 0, 0.12);
+      border: 1px solid var(--crm-gold);
+      color: var(--crm-gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .crm-header-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .crm-header-nav a {
+      color: var(--crm-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .crm-header-nav a:hover {
+      color: #fff;
+    }
+
+    .crm-pill-btn {
+      background: var(--crm-gold);
+      color: #000;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .crm-pill-btn:hover {
+      background: #ffd633;
+      transform: translateY(-1px);
+    }
+
+    .crm-outline-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px solid var(--crm-border);
+      font-weight: 600;
+      font-size: 12px;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .crm-outline-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Layout Container */
+    .crm-main {
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    /* Hero Metrics Bar */
+    .crm-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .crm-metric-card {
+      background: var(--crm-surface);
+      border: 1px solid var(--crm-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .crm-metric-card:hover {
+      border-color: var(--crm-border-gold);
+      transform: translateY(-2px);
+    }
+
+    .crm-metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-accent, var(--crm-gold));
+    }
+
+    .crm-metric-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--crm-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .crm-metric-val {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+
+    .crm-metric-sub {
+      font-size: 12px;
+      color: var(--crm-muted);
+      margin-top: 6px;
+    }
+
+    /* Actions & Controls Bar */
+    .crm-toolbar {
+      background: var(--crm-surface);
+      border: 1px solid var(--crm-border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .crm-search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .crm-search-box input {
+      width: 100%;
+      background: #0d0f12;
+      border: 1px solid var(--crm-border);
+      color: #fff;
+      padding: 10px 14px 10px 38px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+
+    .crm-search-box input:focus {
+      border-color: var(--crm-gold);
+    }
+
+    .crm-search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--crm-muted);
+    }
+
+    .crm-filters {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .crm-select {
+      background: #0d0f12;
+      border: 1px solid var(--crm-border);
+      color: var(--crm-text);
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .crm-select:focus {
+      border-color: var(--crm-gold);
+    }
+
+    /* Pipeline Status Tabs */
+    .crm-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      padding-bottom: 4px;
+    }
+
+    .crm-tab {
+      background: var(--crm-surface);
+      border: 1px solid var(--crm-border);
+      color: var(--crm-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .crm-tab:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .crm-tab.active {
+      background: rgba(254, 204, 0, 0.12);
+      border-color: var(--crm-gold);
+      color: var(--crm-gold);
+    }
+
+    .crm-tab-badge {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .crm-tab.active .crm-tab-badge {
+      background: var(--crm-gold);
+      color: #000;
+    }
+
+    /* Leads Table */
+    .crm-table-container {
+      background: var(--crm-surface);
+      border: 1px solid var(--crm-border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .crm-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .crm-table th {
+      background: #0a0c10;
+      padding: 14px 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-size: 11px;
+      color: var(--crm-muted);
+      border-bottom: 1px solid var(--crm-border);
+    }
+
+    .crm-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--crm-border);
+      vertical-align: middle;
+      color: var(--crm-text);
+    }
+
+    .crm-table tr:hover td {
+      background: var(--crm-surface-hover);
+    }
+
+    .lead-rfq-id {
+      font-family: 'Montserrat', monospace;
+      font-weight: 700;
+      color: var(--crm-gold);
+      font-size: 12px;
+    }
+
+    .lead-buyer-name {
+      font-weight: 700;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .lead-company-name {
+      color: var(--crm-muted);
+      font-size: 12px;
+    }
+
+    .lead-country-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-new {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .status-review {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .status-quoted {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .status-won {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-closed {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .lead-products-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-width: 280px;
+    }
+
+    .prod-tag {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .lead-action-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--crm-border);
+      color: var(--crm-muted);
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .btn-icon.delete:hover {
+      background: rgba(244, 63, 94, 0.2);
+      color: #f43f5e;
+      border-color: rgba(244, 63, 94, 0.4);
+    }
+
+    /* Modal Styling */
+    .crm-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .crm-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .crm-modal-card {
+      background: #14171d;
+      border: 1px solid var(--crm-border-gold);
+      border-radius: 12px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      padding: 24px;
+      box-sizing: border-box;
+      transform: translateY(20px);
+      transition: transform 0.2s ease;
+    }
+
+    .crm-modal-backdrop.open .crm-modal-card {
+      transform: translateY(0);
+    }
+
+    .crm-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--crm-border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .crm-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .crm-modal-close {
+      background: none;
+      border: none;
+      color: var(--crm-muted);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .crm-modal-close:hover {
+      color: #fff;
+    }
+
+    .crm-form-group {
+      margin-bottom: 16px;
+    }
+
+    .crm-form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--crm-muted);
+      margin-bottom: 6px;
+    }
+
+    .crm-form-input, .crm-form-textarea, .crm-form-select {
+      width: 100%;
+      background: #0d0f12;
+      border: 1px solid var(--crm-border);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .crm-form-input:focus, .crm-form-textarea:focus, .crm-form-select:focus {
+      border-color: var(--crm-gold);
+    }
+
+    .crm-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--crm-border);
+    }
+
+    .crm-detail-item {
+      font-size: 13px;
+    }
+
+    .crm-detail-item strong {
+      color: var(--crm-muted);
+      font-weight: 500;
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    /* View Switcher (Table vs Kanban) */
+    .crm-view-switch {
+      display: inline-flex;
+      background: #0d0f12;
+      border: 1px solid var(--crm-border);
+      border-radius: 6px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .crm-view-btn {
+      background: transparent;
+      border: none;
+      color: var(--crm-muted);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .crm-view-btn.active {
+      background: var(--crm-surface-hover);
+      color: var(--crm-gold);
+    }
+
+    /* Kanban Pipeline Board */
+    .crm-kanban-board {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    .crm-kanban-board.active {
+      display: grid;
+    }
+
+    .crm-kanban-col {
+      background: var(--crm-surface);
+      border: 1px solid var(--crm-border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 480px;
+    }
+
+    .crm-kanban-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--crm-border);
+    }
+
+    .crm-kanban-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .crm-kanban-count {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+    }
+
+    .crm-kanban-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .crm-kanban-card {
+      background: #0d0f12;
+      border: 1px solid var(--crm-border);
+      border-left: 3px solid var(--card-color, var(--crm-gold));
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .crm-kanban-card:hover {
+      border-color: var(--crm-border-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .kanban-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .kanban-card-buyer {
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .kanban-card-company {
+      font-size: 11.5px;
+      color: var(--crm-muted);
+      margin-bottom: 8px;
+    }
+
+    .kanban-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      font-size: 11px;
+      color: var(--crm-muted);
+    }
+
+    /* Proforma Invoice Document Styling */
+    .proforma-sheet {
+      background: #ffffff;
+      color: #111111;
+      padding: 36px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-proforma, #printable-proforma * {
+        visibility: visible;
+      }
+      #printable-proforma {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+
+    .crm-footer {
+      border-top: 1px solid var(--crm-border);
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--crm-muted);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body class="crm-body">
+
+  <!-- Top Navigation Bar -->
+  <header class="crm-navbar">
+    <div class="crm-navbar-inner">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <a href="/" class="crm-brand">
+          <img src="/images/wonderx-logo.png" alt="Wonderx Asia Logo" />
+        </a>
+        <span class="crm-badge-tag">EXPORT CRM DESK</span>
+      </div>
+
+      <nav class="crm-header-nav">
+        <a href="/" target="_blank">🌐 Live Portal ↗</a>
+        <a href="/rfq" target="_blank">📋 RFQ Desk ↗</a>
+        <a href="/products" target="_blank">📦 Product Directory ↗</a>
+        <button class="crm-outline-btn" onclick="exportToCSV()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+        <button class="crm-pill-btn" onclick="openCreateModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Buyer Lead
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main CRM Content Area -->
+  <main class="crm-main">
+
+    <!-- KPI Metric Cards -->
+    <div class="crm-metrics-grid">
+      <div class="crm-metric-card" style="--card-accent: var(--crm-blue);">
+        <div class="crm-metric-label">
+          <span>Total RFQ Inquiries</span>
+          <span>📥</span>
+        </div>
+        <div class="crm-metric-val" id="metric-total">0</div>
+        <div class="crm-metric-sub">Across 38+ international ports</div>
+      </div>
+
+      <div class="crm-metric-card" style="--card-accent: var(--crm-amber);">
+        <div class="crm-metric-label">
+          <span>Action Required / Review</span>
+          <span>⏳</span>
+        </div>
+        <div class="crm-metric-val" id="metric-review">0</div>
+        <div class="crm-metric-sub">Sourcing desk assignment pending</div>
+      </div>
+
+      <div class="crm-metric-card" style="--card-accent: var(--crm-purple);">
+        <div class="crm-metric-label">
+          <span>Quoted / Proforma Sent</span>
+          <span>📑</span>
+        </div>
+        <div class="crm-metric-val" id="metric-quoted">0</div>
+        <div class="crm-metric-sub">FOB / CIF price offers sent</div>
+      </div>
+
+      <div class="crm-metric-card" style="--card-accent: var(--crm-emerald);">
+        <div class="crm-metric-label">
+          <span>Deals Won / Orders</span>
+          <span>🚢</span>
+        </div>
+        <div class="crm-metric-val" id="metric-won">0</div>
+        <div class="crm-metric-sub">Contracts in shipment workflow</div>
+      </div>
+
+      <div class="crm-metric-card" style="--card-accent: var(--crm-gold);">
+        <div class="crm-metric-label">
+          <span>Top Buying Region</span>
+          <span>🌍</span>
+        </div>
+        <div class="crm-metric-val" id="metric-region" style="font-size: 20px; line-height: 1.4;">UAE & Gulf</div>
+        <div class="crm-metric-sub">Followed by EU & SE Asia</div>
+      </div>
+    </div>
+
+    <!-- Toolbar: Search, Country Filter, Refresh -->
+    <div class="crm-toolbar">
+      <div class="crm-search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="crm-search" placeholder="Search by buyer, company, email, country, RFQ ID, or product..." oninput="debounceFetch()" />
+      </div>
+
+      <div class="crm-filters">
+        <select class="crm-select" id="crm-filter-country" onchange="fetchLeads()">
+          <option value="all">All Destination Countries</option>
+        </select>
+
+        <select class="crm-select" id="crm-filter-status" onchange="filterByStatus(this.value)">
+          <option value="all">All Pipeline Stages</option>
+          <option value="received">New Leads (Received)</option>
+          <option value="sourcing">Sourcing Team Assigned</option>
+          <option value="quoted">Quoted / Proforma Issued</option>
+          <option value="negotiation">Price Negotiation</option>
+          <option value="won">Order Placed / Won</option>
+          <option value="closed">Closed / Inactive</option>
+        </select>
+
+        <button class="crm-outline-btn" onclick="fetchLeads()" title="Refresh data">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh
+        </button>
+
+        <!-- View Switcher -->
+        <div class="crm-view-switch">
+          <button class="crm-view-btn active" id="btn-view-table" onclick="switchView('table')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Table
+          </button>
+          <button class="crm-view-btn" id="btn-view-kanban" onclick="switchView('kanban')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="11" rx="1"/></svg>
+            Kanban
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline Quick Stage Tabs (Table View) -->
+    <div class="crm-tabs" id="status-tabs">
+      <button class="crm-tab active" data-status="all" onclick="filterByTab(this, 'all')">
+        All Inquiries <span class="crm-tab-badge" id="tab-badge-all">0</span>
+      </button>
+      <button class="crm-tab" data-status="received" onclick="filterByTab(this, 'received')">
+        📥 New Inquiries <span class="crm-tab-badge" id="tab-badge-received">0</span>
+      </button>
+      <button class="crm-tab" data-status="reviewing" onclick="filterByTab(this, 'reviewing')">
+        🔍 Under Sourcing Review <span class="crm-tab-badge" id="tab-badge-review">0</span>
+      </button>
+      <button class="crm-tab" data-status="quoted" onclick="filterByTab(this, 'quoted')">
+        📑 Quoted / Proforma <span class="crm-tab-badge" id="tab-badge-quoted">0</span>
+      </button>
+      <button class="crm-tab" data-status="won" onclick="filterByTab(this, 'won')">
+        ✅ Deals Won <span class="crm-tab-badge" id="tab-badge-won">0</span>
+      </button>
+    </div>
+
+    <!-- Kanban Board Container -->
+    <div class="crm-kanban-board" id="crm-kanban-board">
+      <div class="crm-kanban-col" data-col="received">
+        <div class="crm-kanban-header">
+          <div class="crm-kanban-title"><span style="color:#38bdf8;">●</span> New Inquiries</div>
+          <span class="crm-kanban-count" id="kanban-count-received">0</span>
+        </div>
+        <div class="crm-kanban-list" id="kanban-list-received"></div>
+      </div>
+
+      <div class="crm-kanban-col" data-col="reviewing">
+        <div class="crm-kanban-header">
+          <div class="crm-kanban-title"><span style="color:#f59e0b;">●</span> Sourcing Review</div>
+          <span class="crm-kanban-count" id="kanban-count-reviewing">0</span>
+        </div>
+        <div class="crm-kanban-list" id="kanban-list-reviewing"></div>
+      </div>
+
+      <div class="crm-kanban-col" data-col="quoted">
+        <div class="crm-kanban-header">
+          <div class="crm-kanban-title"><span style="color:#c084fc;">●</span> Quoted / Proforma</div>
+          <span class="crm-kanban-count" id="kanban-count-quoted">0</span>
+        </div>
+        <div class="crm-kanban-list" id="kanban-list-quoted"></div>
+      </div>
+
+      <div class="crm-kanban-col" data-col="negotiation">
+        <div class="crm-kanban-header">
+          <div class="crm-kanban-title"><span style="color:#fecc00;">●</span> Negotiation</div>
+          <span class="crm-kanban-count" id="kanban-count-negotiation">0</span>
+        </div>
+        <div class="crm-kanban-list" id="kanban-list-negotiation"></div>
+      </div>
+
+      <div class="crm-kanban-col" data-col="won">
+        <div class="crm-kanban-header">
+          <div class="crm-kanban-title"><span style="color:#34d399;">●</span> Deals Won / Order</div>
+          <span class="crm-kanban-count" id="kanban-count-won">0</span>
+        </div>
+        <div class="crm-kanban-list" id="kanban-list-won"></div>
+      </div>
+    </div>
+
+    <!-- Table of Leads -->
+    <div class="crm-table-container">
+      <table class="crm-table">
+        <thead>
+          <tr>
+            <th>RFQ ID</th>
+            <th>Buyer & Company</th>
+            <th>Country / Port</th>
+            <th>Products Required</th>
+            <th>Incoterm / Qty</th>
+            <th>Pipeline Status</th>
+            <th>Date</th>
+            <th style="text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="crm-leads-tbody">
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 40px; color: var(--crm-muted);">
+              Loading live CRM export leads...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Lead Detail & Edit Modal -->
+  <div class="crm-modal-backdrop" id="lead-modal">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <div class="crm-modal-title">
+          <span id="modal-rfq-id">WXA-RFQ-0000</span>
+          <span class="status-badge status-review" id="modal-status-badge">Reviewing</span>
+        </div>
+        <button class="crm-modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="crm-detail-grid">
+        <div class="crm-detail-item">
+          <strong>Buyer Name</strong>
+          <span id="modal-buyer-name">-</span>
+        </div>
+        <div class="crm-detail-item">
+          <strong>Company / Entity</strong>
+          <span id="modal-company">-</span>
+        </div>
+        <div class="crm-detail-item">
+          <strong>Contact Email</strong>
+          <span id="modal-email">-</span>
+        </div>
+        <div class="crm-detail-item">
+          <strong>Phone / WhatsApp</strong>
+          <span id="modal-phone">-</span>
+        </div>
+        <div class="crm-detail-item">
+          <strong>Destination Country & Port</strong>
+          <span id="modal-destination">-</span>
+        </div>
+        <div class="crm-detail-item">
+          <strong>Trade Incoterm & Qty</strong>
+          <span id="modal-terms">-</span>
+        </div>
+      </div>
+
+      <div class="crm-form-group">
+        <label>Requested Commodities / Specifications</label>
+        <div id="modal-products-list" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; background: #0d0f12; border-radius: 6px; border: 1px solid var(--crm-border);">
+        </div>
+      </div>
+
+      <div class="crm-form-group">
+        <label>Buyer Message & Custom Specifications</label>
+        <div id="modal-message" style="font-size: 13px; line-height: 1.5; padding: 12px; background: #0d0f12; border-radius: 6px; border: 1px solid var(--crm-border); color: #cbd5e1; min-height: 48px;">
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--crm-border); margin: 20px 0;" />
+
+      <h4 style="font-size: 14px; font-weight: 700; color: var(--crm-gold); margin-bottom: 14px;">CRM Lead Management & Workflow</h4>
+
+      <form id="lead-edit-form" onsubmit="saveLeadChanges(event)">
+        <input type="hidden" id="edit-lead-id" />
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Update Pipeline Stage</label>
+            <select class="crm-form-select" id="edit-status">
+              <option value="Received - Sourcing Team Assigned">Received - Sourcing Team Assigned</option>
+              <option value="Technical Specs Under Review">Technical Specs Under Review</option>
+              <option value="Quoted - Proforma Invoice Sent">Quoted - Proforma Invoice Sent</option>
+              <option value="In Price Negotiation">In Price Negotiation</option>
+              <option value="Deal Won - LC / Advance Received">Deal Won - LC / Advance Received</option>
+              <option value="Contract Finalized & Ready for Loading">Contract Finalized & Ready for Loading</option>
+              <option value="Shipment Dispatched (BL Issued)">Shipment Dispatched (BL Issued)</option>
+              <option value="Closed / Lost">Closed / Lost</option>
+            </select>
+          </div>
+
+          <div class="crm-form-group">
+            <label>Estimated Value (USD / FCL)</label>
+            <input type="text" class="crm-form-input" id="edit-value" placeholder="e.g. $48,500 (1x20ft FCL)" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Lead Priority</label>
+            <select class="crm-form-select" id="edit-priority">
+              <option value="Medium">Medium Priority</option>
+              <option value="High">High Priority (Urgent FCL)</option>
+              <option value="Very High">Tier-1 Multi-Container Account</option>
+              <option value="Low">Low / Sample Request</option>
+            </select>
+          </div>
+
+          <div class="crm-form-group">
+            <label>Assigned Export Desk Officer</label>
+            <select class="crm-form-select" id="edit-assigned">
+              <option value="Gujarat Sourcing Hub">Gujarat Sourcing Hub</option>
+              <option value="Mumbai Port Export Desk">Mumbai Port Export Desk</option>
+              <option value="Middle East Trade Desk">Middle East Trade Desk</option>
+              <option value="Europe & North America Lead">Europe & North America Lead</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Additional Export Logistics Specs -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Maritime Dispatch Port (India)</label>
+            <select class="crm-form-select" id="edit-dispatch-port">
+              <option value="Nhava Sheva (JNPT), Mumbai">Nhava Sheva (JNPT), Mumbai</option>
+              <option value="Mundra Port, Gujarat">Mundra Port, Gujarat</option>
+              <option value="Cochin Port, Kerala">Cochin Port, Kerala</option>
+              <option value="Chennai Port, Tamil Nadu">Chennai Port, Tamil Nadu</option>
+              <option value="Kolkata / Haldia Port">Kolkata / Haldia Port</option>
+            </select>
+          </div>
+
+          <div class="crm-form-group">
+            <label>Container Format / Payload</label>
+            <select class="crm-form-select" id="edit-container-size">
+              <option value="1x 20ft FCL (~18-22 MT)">1x 20ft FCL (~18-22 MT)</option>
+              <option value="2x 20ft FCL (~36-44 MT)">2x 20ft FCL (~36-44 MT)</option>
+              <option value="1x 40ft High Cube FCL (~26-28 MT)">1x 40ft High Cube FCL (~26-28 MT)</option>
+              <option value="LCL / Air Cargo Sample (< 3 MT)">LCL / Air Cargo Sample (&lt; 3 MT)</option>
+              <option value="Spot Bulk Vessel Parcel">Spot Bulk Vessel Parcel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="crm-form-group">
+          <label>Internal Follow-up Notes & Mandi Rates Quoted</label>
+          <textarea class="crm-form-textarea" id="edit-notes" rows="3" placeholder="Enter mandi rates locked, freight quotes received from Nhava Sheva, or buyer payment terms..."></textarea>
+        </div>
+
+        <!-- Export Desk Quick Actions (WhatsApp & Proforma) -->
+        <div style="background: rgba(254, 204, 0, 0.08); border: 1px solid rgba(254, 204, 0, 0.3); border-radius: 8px; padding: 14px; margin-bottom: 20px;">
+          <span style="display: block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--crm-gold); margin-bottom: 10px;">
+            Export Desk Instant Actions
+          </span>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="crm-outline-btn" id="btn-open-whatsapp" onclick="openLeadWhatsApp()" style="background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.4); color: #34d399;">
+              💬 Direct WhatsApp Chat
+            </button>
+            <button type="button" class="crm-outline-btn" onclick="generateProformaForCurrentLead()" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">
+              📄 Generate Proforma Invoice
+            </button>
+            <button type="button" class="crm-outline-btn" onclick="copyLeadSummary()" style="color: #ffffff;">
+              📋 Copy Trade Summary
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+          <button type="button" class="btn-icon delete" style="padding: 10px 16px;" onclick="deleteCurrentLead()">
+            🗑 Delete Lead
+          </button>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="crm-outline-btn" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="crm-pill-btn">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Lead Modal -->
+  <div class="crm-modal-backdrop" id="create-modal">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <div class="crm-modal-title">
+          <span>Register New Buyer Lead</span>
+        </div>
+        <button class="crm-modal-close" onclick="closeCreateModal()">✕</button>
+      </div>
+
+      <form id="create-lead-form" onsubmit="createLead(event)">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Buyer Contact Name *</label>
+            <input type="text" class="crm-form-input" id="new-name" placeholder="e.g. Tariq Al-Mansoor" required />
+          </div>
+          <div class="crm-form-group">
+            <label>Company / Trading Entity</label>
+            <input type="text" class="crm-form-input" id="new-company" placeholder="e.g. Al-Mansoor Food Trading LLC" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Email Address</label>
+            <input type="email" class="crm-form-input" id="new-email" placeholder="buyer@example.com" />
+          </div>
+          <div class="crm-form-group">
+            <label>Phone / WhatsApp</label>
+            <input type="text" class="crm-form-input" id="new-phone" placeholder="+971 50 123 4567" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Destination Country</label>
+            <input type="text" class="crm-form-input" id="new-country" placeholder="e.g. United Arab Emirates" required />
+          </div>
+          <div class="crm-form-group">
+            <label>Destination Discharge Port</label>
+            <input type="text" class="crm-form-input" id="new-port" placeholder="e.g. Jebel Ali / Rotterdam" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="crm-form-group">
+            <label>Trade Incoterm</label>
+            <select class="crm-form-select" id="new-incoterm">
+              <option value="CIF">CIF (Cost, Insurance & Freight)</option>
+              <option value="FOB">FOB (Free On Board - Nhava Sheva / Mundra)</option>
+              <option value="CFR">CFR (Cost & Freight)</option>
+              <option value="EXW">EXW (Ex-Factory Mandi Hub)</option>
+            </select>
+          </div>
+          <div class="crm-form-group">
+            <label>Target Quantity</label>
+            <input type="text" class="crm-form-input" id="new-quantity" placeholder="e.g. 1x 20ft FCL (18 MT)" />
+          </div>
+        </div>
+
+        <div class="crm-form-group">
+          <label>Commodities of Interest (comma separated)</label>
+          <input type="text" class="crm-form-input" id="new-products" placeholder="e.g. Cumin Seeds, Turmeric Powder, Basmati Rice" />
+        </div>
+
+        <div class="crm-form-group">
+          <label>Initial Notes / Requirement Specifications</label>
+          <textarea class="crm-form-textarea" id="new-message" rows="3" placeholder="Buyer requirements, packaging specs (25kg PP bags), or quality parameters..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="crm-outline-btn" onclick="closeCreateModal()">Cancel</button>
+          <button type="submit" class="crm-pill-btn">Add to Pipeline</button>
+        </div>
+      </form>
+    </div>
+  <!-- Proforma Invoice Generator Modal -->
+  <div class="crm-modal-backdrop" id="proforma-modal">
+    <div class="crm-modal-card" style="max-width: 800px; padding: 20px;">
+      <div class="crm-modal-header" style="margin-bottom: 12px; padding-bottom: 10px;">
+        <div class="crm-modal-title">
+          <span>📄 Export Proforma Invoice Generator</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="crm-pill-btn" onclick="printProforma()" style="padding: 6px 12px; font-size: 11px;">
+            🖨 Print / Save PDF
+          </button>
+          <button class="crm-modal-close" onclick="closeProformaModal()">✕</button>
+        </div>
+      </div>
+
+      <!-- Printable Document -->
+      <div id="printable-proforma" class="proforma-sheet" style="font-size: 13px; line-height: 1.5;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #000; padding-bottom: 16px; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; margin: 0; color: #000;">WONDERX INNOVATIONS PVT LTD</h2>
+            <div style="font-size: 11.5px; color: #444; margin-top: 4px;">
+              Agri-Export Coordination Division · Mumbai &amp; Gujarat Corridor, India<br />
+              APEDA / Spices Board Registered · IEC: 0316508921 · GSTIN: 27AABCW1234F1Z5<br />
+              Email: export@wonderxasia.com · Web: www.wonderxasia.com
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 18px; font-weight: 800; color: #d4a700; letter-spacing: 1px;">PROFORMA INVOICE</div>
+            <div style="font-size: 12px; font-weight: 700; margin-top: 4px;" id="pi-number">PI-WXA-2026-0001</div>
+            <div style="font-size: 11px; color: #666;" id="pi-date">Date: 20 Oct 2026</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #888; margin-bottom: 4px;">CONSIGNEE / BUYER:</div>
+            <div style="font-weight: 700; font-size: 14px;" id="pi-buyer-name">-</div>
+            <div style="color: #444;" id="pi-buyer-company">-</div>
+            <div style="font-size: 12px; color: #666;" id="pi-buyer-contact">-</div>
+            <div style="font-size: 12px; color: #666;" id="pi-buyer-destination">-</div>
+          </div>
+          <div>
+            <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #888; margin-bottom: 4px;">TRADE TERMS &amp; ROUTING:</div>
+            <div><strong>Incoterm:</strong> <span id="pi-incoterm">CIF Destination Port</span></div>
+            <div><strong>Port of Loading:</strong> <span id="pi-pol">Nhava Sheva (JNPT) / Mundra, India</span></div>
+            <div><strong>Discharge Port:</strong> <span id="pi-pod">Target Destination</span></div>
+            <div><strong>Payment Terms:</strong> <span id="pi-payment">30% Advance T/T, 70% against BL Copy</span></div>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+          <thead>
+            <tr style="background: #111; color: #fff; font-size: 11px; text-transform: uppercase;">
+              <th style="padding: 8px 10px; text-align: left;">Item Description / Grading</th>
+              <th style="padding: 8px 10px; text-align: left;">Packing Format</th>
+              <th style="padding: 8px 10px; text-align: right;">Quantity</th>
+              <th style="padding: 8px 10px; text-align: right;">Indicative Total</th>
+            </tr>
+          </thead>
+          <tbody id="pi-items-body">
+            <!-- Dynamic lines -->
+          </tbody>
+        </table>
+
+        <div style="border-top: 1px solid #ddd; padding-top: 14px; display: flex; justify-content: space-between; font-size: 11px; color: #555;">
+          <div style="max-width: 60%;">
+            <strong>Standard Quality Guarantee:</strong><br />
+            Goods certified sortex-cleaned as per Spices Board / AGMARK standards with Certificate of Analysis (CoA) issued by accredited laboratory. Moisture &lt; 9.5%, Purity 99.5% min.
+          </div>
+          <div style="text-align: right;">
+            <strong>Authorized Signatory</strong><br />
+            Wonderx Innovations Pvt Ltd<br />
+            <em>Export Operations Desk</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="crm-footer">
+    Wonderx Innovations Pvt Ltd &bull; Global B2B Agri-Export Desk &bull; Confidential CRM &bull; Running on Express Node Engine
+  </footer>
+
+  <script>
+    let allLeads = [];
+    let currentFilterStatus = 'all';
+    let debounceTimer;
+
+    // Fetch CRM summary & leads
+    async function fetchLeads() {
+      try {
+        const search = document.getElementById('crm-search').value.trim();
+        const country = document.getElementById('crm-filter-country').value;
+        
+        let url = `/api/inquiries?status=${encodeURIComponent(currentFilterStatus)}&country=${encodeURIComponent(country)}`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+
+        const [leadsRes, summaryRes] = await Promise.all([
+          fetch(url),
+          fetch('/api/crm/summary')
+        ]);
+
+        const leadsData = await leadsRes.json();
+        const summaryData = await summaryRes.json();
+
+        if (leadsData.success) {
+          allLeads = leadsData.inquiries || [];
+          renderLeadsTable(allLeads);
+        }
+
+        if (summaryData.success) {
+          updateSummaryMetrics(summaryData);
+        }
+      } catch (err) {
+        console.error('Error fetching leads:', err);
+      }
+    }
+
+    function updateSummaryMetrics(data) {
+      document.getElementById('metric-total').textContent = data.totalLeads || 0;
+      document.getElementById('metric-review').textContent = data.statusCounts?.reviewing || 0;
+      document.getElementById('metric-quoted').textContent = data.statusCounts?.quoted || 0;
+      document.getElementById('metric-won').textContent = data.statusCounts?.won || 0;
+      
+      if (data.topCountries && data.topCountries.length > 0) {
+        document.getElementById('metric-region').textContent = data.topCountries[0].country;
+      }
+
+      // Update Tab Badges
+      document.getElementById('tab-badge-all').textContent = data.totalLeads || 0;
+      document.getElementById('tab-badge-received').textContent = data.statusCounts?.new || 0;
+      document.getElementById('tab-badge-review').textContent = data.statusCounts?.reviewing || 0;
+      document.getElementById('tab-badge-quoted').textContent = data.statusCounts?.quoted || 0;
+      document.getElementById('tab-badge-won').textContent = data.statusCounts?.won || 0;
+
+      // Populate country dropdown once
+      const countrySelect = document.getElementById('crm-filter-country');
+      if (countrySelect.options.length <= 1 && data.topCountries) {
+        data.topCountries.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.country;
+          opt.textContent = `${c.country} (${c.count})`;
+          countrySelect.appendChild(opt);
+        });
+      }
+    }
+
+    function renderLeadsTable(leads) {
+      const tbody = document.getElementById('crm-leads-tbody');
+      if (!leads || leads.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 48px; color: var(--crm-muted);">
+              No export inquiries match your filter criteria.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = leads.map(lead => {
+        const productsHtml = (Array.isArray(lead.products) ? lead.products : [])
+          .map(p => {
+            const name = typeof p === 'string' ? p : p.name;
+            return `<span class="prod-tag">${escapeHtml(name)}</span>`;
+          }).join('') || '<span style="color:var(--crm-muted); font-size:11px;">Custom RFQ</span>';
+
+        const statusClass = getStatusClass(lead.status);
+        const dateStr = lead.timestamp ? new Date(lead.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : 'Recent';
+
+        return `
+          <tr>
+            <td>
+              <span class="lead-rfq-id">${escapeHtml(lead.id)}</span>
+            </td>
+            <td>
+              <div class="lead-buyer-name">${escapeHtml(lead.name || 'Unknown Buyer')}</div>
+              <div class="lead-company-name">${escapeHtml(lead.company || 'Direct Importer')}</div>
+              <div style="font-size:11px; color:var(--crm-muted); margin-top:2px;">
+                ${lead.email ? `✉ ${escapeHtml(lead.email)}` : ''} 
+                ${lead.phone ? `&bull; 📞 ${escapeHtml(lead.phone)}` : ''}
+              </div>
+            </td>
+            <td>
+              <span class="lead-country-badge">
+                📍 ${escapeHtml(lead.country || 'International')}
+              </span>
+              <div style="font-size: 11px; color: var(--crm-muted); margin-top: 4px;">
+                Port: ${escapeHtml(lead.port || 'Any discharge port')}
+              </div>
+            </td>
+            <td>
+              <div class="lead-products-tags">${productsHtml}</div>
+            </td>
+            <td>
+              <div style="font-weight:700; color:#fff;">${escapeHtml(lead.incoterm || 'FOB/CIF')}</div>
+              <div style="font-size:11px; color:var(--crm-muted);">${escapeHtml(lead.targetQuantity || 'FCL container')}</div>
+            </td>
+            <td>
+              <span class="status-badge ${statusClass}">
+                ${escapeHtml(lead.status || 'Received')}
+              </span>
+            </td>
+            <td style="color: var(--crm-muted); font-size: 12px; white-space: nowrap;">
+              ${dateStr}
+            </td>
+            <td style="text-align: right;">
+              <div class="lead-action-btns" style="justify-content: flex-end;">
+                <button class="btn-icon" onclick="openLeadModal('${lead.id}')" title="View & Edit Lead">
+                  Manage ↗
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function getStatusClass(status = '') {
+      const s = status.toLowerCase();
+      if (s.includes('won') || s.includes('signed') || s.includes('order')) return 'status-won';
+      if (s.includes('quote') || s.includes('proforma')) return 'status-quoted';
+      if (s.includes('review') || s.includes('sourcing') || s.includes('negotiat')) return 'status-review';
+      if (s.includes('closed') || s.includes('lost')) return 'status-closed';
+      return 'status-new';
+    }
+
+    function filterByTab(btn, status) {
+      document.querySelectorAll('#status-tabs .crm-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilterStatus = status;
+      fetchLeads();
+    }
+
+    function filterByStatus(val) {
+      currentFilterStatus = val;
+      fetchLeads();
+    }
+
+    function debounceFetch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(fetchLeads, 250);
+    }
+
+    // Lead Detail Modal
+    function openLeadModal(id) {
+      const lead = allLeads.find(l => l.id === id);
+      if (!lead) return;
+
+      document.getElementById('edit-lead-id').value = lead.id;
+      document.getElementById('modal-rfq-id').textContent = lead.id;
+      document.getElementById('modal-buyer-name').textContent = lead.name || '-';
+      document.getElementById('modal-company').textContent = lead.company || '-';
+      document.getElementById('modal-email').textContent = lead.email || 'Not provided';
+      document.getElementById('modal-phone').textContent = lead.phone || 'Not provided';
+      document.getElementById('modal-destination').textContent = `${lead.country || 'International'} (Discharge: ${lead.port || 'Per buyer instruction'})`;
+      document.getElementById('modal-terms').textContent = `${lead.incoterm || 'FOB/CIF'} — ${lead.targetQuantity || 'Standard export parcel'}`;
+      
+      const badge = document.getElementById('modal-status-badge');
+      badge.textContent = lead.status || 'Received';
+      badge.className = `status-badge ${getStatusClass(lead.status)}`;
+
+      // Message
+      document.getElementById('modal-message').textContent = lead.message || 'No additional notes provided by buyer.';
+
+      // Products
+      const prodsList = document.getElementById('modal-products-list');
+      prodsList.innerHTML = (Array.isArray(lead.products) ? lead.products : [])
+        .map(p => {
+          const name = typeof p === 'string' ? p : p.name;
+          return `<span class="prod-tag" style="padding: 4px 10px; font-size: 12px; background: rgba(254, 204, 0, 0.15); color: var(--crm-gold); border: 1px solid rgba(254,204,0,0.3);">${escapeHtml(name)}</span>`;
+        }).join('') || '<span style="color:var(--crm-muted); font-size:12px;">Full Product Portfolio Inquiry</span>';
+
+      // Edit Form Values
+      const statusSelect = document.getElementById('edit-status');
+      if (lead.status) {
+        statusSelect.value = lead.status;
+      }
+      document.getElementById('edit-value').value = lead.quotationValue || '';
+      document.getElementById('edit-priority').value = lead.priority || 'Medium';
+      document.getElementById('edit-assigned').value = lead.assignedTo || 'Gujarat Sourcing Hub';
+      document.getElementById('edit-notes').value = lead.notes || '';
+
+      document.getElementById('lead-modal').classList.add('open');
+    }
+
+    let currentView = 'table';
+    let currentSelectedLead = null;
+
+    function switchView(view) {
+      currentView = view;
+      const tableBtn = document.getElementById('btn-view-table');
+      const kanbanBtn = document.getElementById('btn-view-kanban');
+      const tableContainer = document.querySelector('.crm-table-container');
+      const kanbanBoard = document.getElementById('crm-kanban-board');
+      const tabs = document.getElementById('status-tabs');
+
+      if (view === 'kanban') {
+        tableBtn.classList.remove('active');
+        kanbanBtn.classList.add('active');
+        tableContainer.style.display = 'none';
+        if (tabs) tabs.style.display = 'none';
+        kanbanBoard.classList.add('active');
+        renderKanbanBoard(allLeads);
+      } else {
+        kanbanBtn.classList.remove('active');
+        tableBtn.classList.add('active');
+        kanbanBoard.classList.remove('active');
+        tableContainer.style.display = 'block';
+        if (tabs) tabs.style.display = 'flex';
+        renderLeadsTable(allLeads);
+      }
+    }
+
+    function renderKanbanBoard(leads) {
+      const cols = {
+        received: { list: document.getElementById('kanban-list-received'), count: document.getElementById('kanban-count-received'), items: [] },
+        reviewing: { list: document.getElementById('kanban-list-reviewing'), count: document.getElementById('kanban-count-reviewing'), items: [] },
+        quoted: { list: document.getElementById('kanban-list-quoted'), count: document.getElementById('kanban-count-quoted'), items: [] },
+        negotiation: { list: document.getElementById('kanban-list-negotiation'), count: document.getElementById('kanban-count-negotiation'), items: [] },
+        won: { list: document.getElementById('kanban-list-won'), count: document.getElementById('kanban-count-won'), items: [] }
+      };
+
+      // Reset
+      Object.values(cols).forEach(c => {
+        if (c.list) c.list.innerHTML = '';
+        c.items = [];
+      });
+
+      leads.forEach(lead => {
+        const s = (lead.status || '').toLowerCase();
+        let target = 'received';
+        if (s.includes('won') || s.includes('signed') || s.includes('order')) target = 'won';
+        else if (s.includes('negotiat')) target = 'negotiation';
+        else if (s.includes('quote') || s.includes('proforma')) target = 'quoted';
+        else if (s.includes('review') || s.includes('sourcing')) target = 'reviewing';
+
+        if (cols[target]) {
+          cols[target].items.push(lead);
+        }
+      });
+
+      Object.entries(cols).forEach(([key, col]) => {
+        if (col.count) col.count.textContent = col.items.length;
+        if (!col.list) return;
+
+        if (col.items.length === 0) {
+          col.list.innerHTML = `
+            <div style="text-align: center; padding: 24px 12px; color: var(--crm-muted); font-size: 11.5px; border: 1px dashed rgba(255,255,255,0.06); border-radius: 6px;">
+              No inquiries in this stage
+            </div>
+          `;
+          return;
+        }
+
+        col.list.innerHTML = col.items.map(lead => {
+          const colorMap = {
+            received: '#38bdf8',
+            reviewing: '#f59e0b',
+            quoted: '#c084fc',
+            negotiation: '#fecc00',
+            won: '#34d399'
+          };
+          const borderAccent = colorMap[key] || '#fecc00';
+          const valText = lead.quotationValue ? `<strong style="color:var(--crm-gold);">${escapeHtml(lead.quotationValue)}</strong>` : (lead.targetQuantity || '1 FCL');
+          const productsSummary = (Array.isArray(lead.products) ? lead.products : [])
+            .map(p => typeof p === 'string' ? p : p.name).slice(0, 2).join(', ') || 'Custom Commodities';
+
+          return `
+            <div class="crm-kanban-card" style="--card-color: ${borderAccent};" onclick="openLeadModal('${lead.id}')">
+              <div class="kanban-card-top">
+                <span class="lead-rfq-id">${escapeHtml(lead.id)}</span>
+                <span style="font-size: 10px; color: var(--crm-muted);">${lead.timestamp ? new Date(lead.timestamp).toLocaleDateString('en-GB', { day:'2-digit', month:'short' }) : ''}</span>
+              </div>
+              <div class="kanban-card-buyer">${escapeHtml(lead.name || 'Anonymous')}</div>
+              <div class="kanban-card-company">${escapeHtml(lead.company || 'Direct Buyer')} &bull; 📍 ${escapeHtml(lead.country || 'International')}</div>
+              <div style="font-size: 11.5px; color: #cbd5e1; margin-bottom: 8px; line-height: 1.4;">
+                ${escapeHtml(productsSummary)}
+              </div>
+              <div class="kanban-card-footer">
+                <span>${escapeHtml(lead.incoterm || 'FOB/CIF')}</span>
+                <span>${valText}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      });
+    }
+
+    // Lead Detail Modal
+    function openLeadModal(id) {
+      const lead = allLeads.find(l => l.id === id);
+      if (!lead) return;
+      currentSelectedLead = lead;
+
+      document.getElementById('edit-lead-id').value = lead.id;
+      document.getElementById('modal-rfq-id').textContent = lead.id;
+      document.getElementById('modal-buyer-name').textContent = lead.name || '-';
+      document.getElementById('modal-company').textContent = lead.company || '-';
+      document.getElementById('modal-email').textContent = lead.email || 'Not provided';
+      document.getElementById('modal-phone').textContent = lead.phone || 'Not provided';
+      document.getElementById('modal-destination').textContent = `${lead.country || 'International'} (Discharge: ${lead.port || 'Per buyer instruction'})`;
+      document.getElementById('modal-terms').textContent = `${lead.incoterm || 'FOB/CIF'} — ${lead.targetQuantity || 'Standard export parcel'}`;
+      
+      const badge = document.getElementById('modal-status-badge');
+      badge.textContent = lead.status || 'Received';
+      badge.className = `status-badge ${getStatusClass(lead.status)}`;
+
+      // Message
+      document.getElementById('modal-message').textContent = lead.message || 'No additional notes provided by buyer.';
+
+      // Products
+      const prodsList = document.getElementById('modal-products-list');
+      prodsList.innerHTML = (Array.isArray(lead.products) ? lead.products : [])
+        .map(p => {
+          const name = typeof p === 'string' ? p : p.name;
+          return `<span class="prod-tag" style="padding: 4px 10px; font-size: 12px; background: rgba(254, 204, 0, 0.15); color: var(--crm-gold); border: 1px solid rgba(254,204,0,0.3);">${escapeHtml(name)}</span>`;
+        }).join('') || '<span style="color:var(--crm-muted); font-size:12px;">Full Product Portfolio Inquiry</span>';
+
+      // Edit Form Values
+      const statusSelect = document.getElementById('edit-status');
+      if (lead.status) statusSelect.value = lead.status;
+      document.getElementById('edit-value').value = lead.quotationValue || '';
+      document.getElementById('edit-priority').value = lead.priority || 'Medium';
+      document.getElementById('edit-assigned').value = lead.assignedTo || 'Gujarat Sourcing Hub';
+      document.getElementById('edit-notes').value = lead.notes || '';
+      
+      if (document.getElementById('edit-dispatch-port') && lead.dispatchPort) {
+        document.getElementById('edit-dispatch-port').value = lead.dispatchPort;
+      }
+      if (document.getElementById('edit-container-size') && lead.containerSize) {
+        document.getElementById('edit-container-size').value = lead.containerSize;
+      }
+
+      document.getElementById('lead-modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('lead-modal').classList.remove('open');
+    }
+
+    // Direct WhatsApp Chat with Buyer
+    function openLeadWhatsApp() {
+      if (!currentSelectedLead) return;
+      const rawPhone = (currentSelectedLead.phone || '').replace(/[^0-9]/g, '');
+      if (!rawPhone) {
+        alert('Buyer has not provided a valid WhatsApp phone number.');
+        return;
+      }
+      const buyerName = currentSelectedLead.name || 'Sir/Madam';
+      const rfqId = currentSelectedLead.id || '';
+      const text = encodeURIComponent(`Hello ${buyerName}, this is Wonderx Innovations Export Desk regarding your trade inquiry [${rfqId}] on Wonderxasia.`);
+      window.open(`https://wa.me/${rawPhone}?text=${text}`, '_blank');
+    }
+
+    // Copy Trade Summary
+    function copyLeadSummary() {
+      if (!currentSelectedLead) return;
+      const l = currentSelectedLead;
+      const summary = `WONDERXASIA EXPORT INQUIRY SUMMARY
+Reference: ${l.id}
+Buyer: ${l.name} (${l.company || 'Direct Buyer'})
+Contact: ${l.email || 'N/A'} | ${l.phone || 'N/A'}
+Destination: ${l.country} (${l.port || 'Any port'})
+Terms: ${l.incoterm || 'FOB/CIF'} | ${l.targetQuantity || '1 FCL'}
+Requirements: ${Array.isArray(l.products) ? l.products.join(', ') : l.products}
+Notes: ${l.message || 'N/A'}`;
+
+      navigator.clipboard.writeText(summary).then(() => {
+        alert('Export inquiry summary copied to clipboard!');
+      }).catch(() => {
+        prompt('Copy inquiry summary:', summary);
+      });
+    }
+
+    // Proforma Invoice Generator
+    function generateProformaForCurrentLead() {
+      if (!currentSelectedLead) return;
+      const l = currentSelectedLead;
+
+      document.getElementById('pi-number').textContent = `PI-${l.id || '2026-001'}`;
+      document.getElementById('pi-date').textContent = `Date: ${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}`;
+      document.getElementById('pi-buyer-name').textContent = l.name || 'Valued Importer';
+      document.getElementById('pi-buyer-company').textContent = l.company || 'Consignee Account';
+      document.getElementById('pi-buyer-contact').textContent = `Email: ${l.email || 'N/A'} | Tel: ${l.phone || 'N/A'}`;
+      document.getElementById('pi-buyer-destination').textContent = `Destination: ${l.country || 'International'} (Discharge Port: ${l.port || 'As agreed'})`;
+
+      document.getElementById('pi-incoterm').textContent = l.incoterm || 'CIF Destination Port';
+      document.getElementById('pi-pod').textContent = `${l.port || 'Target Port'}, ${l.country || 'Overseas'}`;
+      document.getElementById('pi-pol').textContent = document.getElementById('edit-dispatch-port') ? document.getElementById('edit-dispatch-port').value : 'Nhava Sheva (JNPT) / Mundra';
+
+      const tbody = document.getElementById('pi-items-body');
+      const items = Array.isArray(l.products) && l.products.length > 0 ? l.products : ['Indian Agri Commodity Export Grade (Sortex Cleaned)'];
+      const qty = document.getElementById('edit-container-size') ? document.getElementById('edit-container-size').value : (l.targetQuantity || '1x 20ft FCL (~18-20 MT)');
+      const val = document.getElementById('edit-value').value || l.quotationValue || 'As Per Spot Mandi Confirmation';
+
+      tbody.innerHTML = items.map((item, idx) => {
+        const title = typeof item === 'string' ? item : (item.name || 'Agri Commodity');
+        return `
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 10px;">
+              <strong>${idx + 1}. ${escapeHtml(title)}</strong>
+              <div style="font-size: 11px; color: #666;">Purity 99.5% Sortex Clean · Standard Export Quality · CoA Assured</div>
+            </td>
+            <td style="padding: 10px;">25kg / 50kg PP Woven Bags with Inner Liner</td>
+            <td style="padding: 10px; text-align: right;">${escapeHtml(qty)}</td>
+            <td style="padding: 10px; text-align: right; font-weight: 700;">${escapeHtml(val)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('proforma-modal').classList.add('open');
+    }
+
+    function closeProformaModal() {
+      document.getElementById('proforma-modal').classList.remove('open');
+    }
+
+    function printProforma() {
+      window.print();
+    }
+
+    async function saveLeadChanges(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-lead-id').value;
+      const status = document.getElementById('edit-status').value;
+      const quotationValue = document.getElementById('edit-value').value;
+      const priority = document.getElementById('edit-priority').value;
+      const assignedTo = document.getElementById('edit-assigned').value;
+      const notes = document.getElementById('edit-notes').value;
+      const dispatchPort = document.getElementById('edit-dispatch-port') ? document.getElementById('edit-dispatch-port').value : '';
+      const containerSize = document.getElementById('edit-container-size') ? document.getElementById('edit-container-size').value : '';
+
+      try {
+        const res = await fetch(`/api/inquiries/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status, quotationValue, priority, assignedTo, notes, dispatchPort, containerSize })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeModal();
+          fetchLeads();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error updating lead');
+      }
+    }
+
+    async function deleteCurrentLead() {
+      const id = document.getElementById('edit-lead-id').value;
+      if (!confirm(`Are you sure you want to delete inquiry ${id}? This cannot be undone.`)) return;
+
+      try {
+        const res = await fetch(`/api/inquiries/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          closeModal();
+          fetchLeads();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error deleting lead');
+      }
+    }
+
+    // Create Modal
+    function openCreateModal() {
+      document.getElementById('create-modal').classList.add('open');
+    }
+
+    function closeCreateModal() {
+      document.getElementById('create-modal').classList.remove('open');
+    }
+
+    async function createLead(e) {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('new-name').value,
+        company: document.getElementById('new-company').value,
+        email: document.getElementById('new-email').value,
+        phone: document.getElementById('new-phone').value,
+        country: document.getElementById('new-country').value,
+        port: document.getElementById('new-port').value,
+        incoterm: document.getElementById('new-incoterm').value,
+        targetQuantity: document.getElementById('new-quantity').value,
+        products: document.getElementById('new-products').value.split(',').map(s => s.trim()).filter(Boolean),
+        message: document.getElementById('new-message').value
+      };
+
+      try {
+        const res = await fetch('/api/inquiries', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeCreateModal();
+          document.getElementById('create-lead-form').reset();
+          fetchLeads();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Network error creating lead');
+      }
+    }
+
+    // Export Leads as CSV
+    function exportToCSV() {
+      if (!allLeads.length) return alert('No leads available to export.');
+
+      const headers = ['RFQ ID', 'Date', 'Buyer Name', 'Company', 'Email', 'Phone', 'Country', 'Discharge Port', 'Incoterm', 'Quantity', 'Products', 'Status', 'Quotation Value', 'Notes'];
+      const rows = allLeads.map(l => [
+        l.id,
+        l.timestamp || '',
+        `"${(l.name || '').replace(/"/g, '""')}"`,
+        `"${(l.company || '').replace(/"/g, '""')}"`,
+        l.email || '',
+        l.phone || '',
+        `"${(l.country || '').replace(/"/g, '""')}"`,
+        `"${(l.port || '').replace(/"/g, '""')}"`,
+        l.incoterm || '',
+        `"${(l.targetQuantity || '').replace(/"/g, '""')}"`,
+        `"${(Array.isArray(l.products) ? l.products.map(p => typeof p === 'string' ? p : p.name).join('; ') : '').replace(/"/g, '""')}"`,
+        `"${(l.status || '').replace(/"/g, '""')}"`,
+        `"${(l.quotationValue || '').replace(/"/g, '""')}"`,
+        `"${(l.notes || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `wonderxasia_crm_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', fetchLeads);
+  </script>
+</body>
+</html>
