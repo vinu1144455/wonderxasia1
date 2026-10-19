@@ -4,7 +4,7 @@ An Indian B2B agricultural export web platform connecting overseas food importer
 
 ## Tech Stack
 - **Backend:** Node.js (v18+) with Express.js REST API
-- **Frontend:** Vanilla HTML5, CSS3, JavaScript ES6+ & React 18 Dynamic Engine (Babel Standalone)
+- **Frontend:** Vanilla HTML5, CSS3 and JavaScript (no React/Babel — faster loading)
 - **Styling:** Custom Corporate Montserrat & DM Sans typography with luxury B2B export design accents
 - **Storage:** File-based JSON database (`data/products.json`, `data/categories.json`, `data/inquiries.json`)
 
@@ -69,7 +69,7 @@ wonderxasia/
 │   │   ├── catalog.js       # Dynamic product filtering & search
 │   │   ├── category-page.js # Single category product loader
 │   │   ├── product-detail.js# Single product specs & CoA downloader
-│   │   └── react-app.js     # Hero slider & ocean freight simulator
+│   │   └── home.js          # Homepage product showcase
 │   ├── index.html           # Homepage
 │   ├── categories.html      # All categories hub
 │   ├── category.html        # Single category view
@@ -84,3 +84,9 @@ wonderxasia/
 ├── server.js                # Express REST API & static routing
 └── package.json             # Node dependencies and scripts
 ```
+
+---
+
+## Editing the homepage banners
+Each slide in `public/index.html` (`.wx-slide`) is a photo in `images/` plus real, editable text and buttons.
+To change a banner: replace the image (1600×686 px, about 150 KB) and edit the heading, text and button link in that slide.
