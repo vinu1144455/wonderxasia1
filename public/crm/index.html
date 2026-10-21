@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wonderxasia Export CRM Portal — B2B Agri & Auto Logistics Management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="/crm/crm.css" />
+  <link rel="icon" type="image/png" href="/images/wonderx-logo.png" />
+</head>
+<body>
+
+  <div class="crm-layout">
+
+    <!-- Sidebar Navigation -->
+    <aside class="crm-sidebar">
+      <div class="crm-brand">
+        <img src="/images/wonderx-logo.png" alt="Wonderx" />
+        <div class="crm-brand-info">
+          <h1>WONDERX CRM</h1>
+          <span class="crm-brand-badge">Agri-Export OS</span>
+        </div>
+      </div>
+
+      <ul class="crm-nav-list">
+        <li class="crm-nav-item">
+          <button class="active" data-view="dashboard">
+            <span class="crm-nav-icon">📊</span>
+            <span>Dashboard</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="inquiries">
+            <span class="crm-nav-icon">📥</span>
+            <span>Leads &amp; Enquiries</span>
+            <span class="crm-nav-badge" id="badge-inquiries-count">0</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="quotations">
+            <span class="crm-nav-icon">📝</span>
+            <span>Proforma Invoices (PI)</span>
+            <span class="crm-nav-badge" id="badge-quotes-count">0</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="customers">
+            <span class="crm-nav-icon">👥</span>
+            <span>Buyers &amp; Importers</span>
+            <span class="crm-nav-badge" id="badge-customers-count">0</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="shipments">
+            <span class="crm-nav-icon">🚢</span>
+            <span>Container Logistics</span>
+            <span class="crm-nav-badge" id="badge-shipments-count">0</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="mandi">
+            <span class="crm-nav-icon">🌾</span>
+            <span>Mandi Sourcing</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="samples">
+            <span class="crm-nav-icon">📦</span>
+            <span>Courier Samples</span>
+          </button>
+        </li>
+        <li class="crm-nav-item">
+          <button data-view="config">
+            <span class="crm-nav-icon">⚙️</span>
+            <span>Export Profile</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="crm-sidebar-footer">
+        <span>Public Site:</span>
+        <a href="/" target="_blank">wonderxasia.com ↗</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="crm-main">
+
+      <!-- Top CRM Header -->
+      <header class="crm-header">
+        <div class="crm-header-left">
+          <h2 class="crm-page-title" id="crm-page-title">Executive Dashboard</h2>
+          <div class="crm-header-clocks">
+            <div class="crm-clock-pill">
+              <span>🇮🇳 IST:</span>
+              <strong id="clock-ist">--:--:--</strong>
+            </div>
+            <div class="crm-clock-pill">
+              <span>🌐 UTC:</span>
+              <strong id="clock-utc">--:--:--</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="crm-header-actions">
+          <button class="crm-btn crm-btn-secondary crm-btn-sm" onclick="refreshAllCrmData()">
+            <span>🔄</span> Refresh
+          </button>
+          <button class="crm-btn crm-btn-primary" onclick="openNewQuotationModal()">
+            <span>+</span> Generate Proforma (PI)
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD -->
+      <section class="crm-view-panel active" id="view-dashboard">
+        <!-- KPI Cards Grid -->
+        <div class="crm-kpi-grid">
+          <div class="crm-kpi-card gold">
+            <div class="crm-kpi-header">
+              <span class="crm-kpi-label">Active Leads &amp; Enquiries</span>
+              <span class="crm-kpi-icon">📥</span>
+            </div>
+            <div class="crm-kpi-value" id="kpi-total-inquiries">0</div>
+            <div class="crm-kpi-sub"><span id="kpi-new-leads">0</span> unreviewed inquiries</div>
+          </div>
+
+          <div class="crm-kpi-card emerald">
+            <div class="crm-kpi-header">
+              <span class="crm-kpi-label">Proforma Quotes Issued</span>
+              <span class="crm-kpi-icon">📝</span>
+            </div>
+            <div class="crm-kpi-value" id="kpi-total-quotes">0</div>
+            <div class="crm-kpi-sub"><span id="kpi-active-quotes">0</span> active negotiations</div>
+          </div>
+
+          <div class="crm-kpi-card blue">
+            <div class="crm-kpi-header">
+              <span class="crm-kpi-label">Export Pipeline Value</span>
+              <span class="crm-kpi-icon">💵</span>
+            </div>
+            <div class="crm-kpi-value" id="kpi-pipeline-value">$0</div>
+            <div class="crm-kpi-sub">Total active CIF/FOB proformas</div>
+          </div>
+
+          <div class="crm-kpi-card amber">
+            <div class="crm-kpi-header">
+              <span class="crm-kpi-label">Containers In-Transit</span>
+              <span class="crm-kpi-icon">🚢</span>
+            </div>
+            <div class="crm-kpi-value" id="kpi-in-transit">0</div>
+            <div class="crm-kpi-sub"><span id="kpi-total-shipments">0</span> total bookings logged</div>
+          </div>
+        </div>
+
+        <!-- 2-Column Split: Recent Enquiries & Commodity Demand -->
+        <div style="display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 24px;">
+          
+          <!-- Recent Inquiries Table -->
+          <div class="crm-card">
+            <div class="crm-card-header">
+              <h3 class="crm-card-title">
+                <span>📥</span> Recent Buyer Enquiries Stream
+              </h3>
+              <button class="crm-btn crm-btn-secondary crm-btn-sm" onclick="switchView('inquiries')">
+                View All Enquiries →
+              </button>
+            </div>
+            <div class="crm-table-wrapper">
+              <table class="crm-table">
+                <thead>
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>Buyer / Company</th>
+                    <th>Country / Port</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-recent-inquiries-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Commodity Demand Breakdown & Mandi Ticker -->
+          <div>
+            <div class="crm-card">
+              <div class="crm-card-header">
+                <h3 class="crm-card-title">
+                  <span>🌾</span> Top Commodity Inquiries
+                </h3>
+              </div>
+              <div id="dashboard-top-commodities-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- APMC Mandi Benchmark Ticker -->
+            <div class="crm-card">
+              <div class="crm-card-header">
+                <h3 class="crm-card-title">
+                  <span>📈</span> Indicative Mandi Benchmark Rates
+                </h3>
+                <span class="crm-badge crm-badge-emerald">Live APMC Cycle</span>
+              </div>
+              <div id="dashboard-mandi-rates-list" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 2: LEADS & ENQUIRIES -->
+      <section class="crm-view-panel" id="view-inquiries">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="inquiries-search-input" placeholder="Search by name, company, email, or country..." />
+          </div>
+          <div class="crm-filter-group">
+            <select id="inquiries-status-filter" class="crm-select">
+              <option value="all">All Statuses</option>
+              <option value="New Lead">New Lead</option>
+              <option value="Reviewing Specification">Reviewing Specification</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Quotation Sent">Quotation Sent</option>
+              <option value="Contract Signed">Contract Signed</option>
+              <option value="Archived">Archived</option>
+            </select>
+            <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewLeadModal()">
+              <span>+</span> Add Manual Lead
+            </button>
+          </div>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Ref ID</th>
+                <th>Buyer Name</th>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+                <th>Subject / Requirements</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiries-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 3: PROFORMA INVOICES & QUOTATIONS -->
+      <section class="crm-view-panel" id="view-quotations">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="quotes-search-input" placeholder="Search by PI number, buyer, or country..." />
+          </div>
+          <div class="crm-filter-group">
+            <select id="quotes-status-filter" class="crm-select">
+              <option value="all">All Statuses</option>
+              <option value="Issued">Issued</option>
+              <option value="Negotiation">Negotiation</option>
+              <option value="Accepted / Contract Signed">Accepted / Contract Signed</option>
+              <option value="Declined">Declined</option>
+            </select>
+            <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewQuotationModal()">
+              <span>+</span> Create New PI / Quote
+            </button>
+          </div>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>PI Date</th>
+                <th>PI Number</th>
+                <th>Buyer Company</th>
+                <th>Destination Port</th>
+                <th>Incoterm</th>
+                <th>Container Load</th>
+                <th>Total Value (USD)</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="quotes-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 4: BUYERS & IMPORTERS DIRECTORY -->
+      <section class="crm-view-panel" id="view-customers">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="customers-search-input" placeholder="Search buyers by company, country, contact..." />
+          </div>
+          <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewCustomerModal()">
+            <span>+</span> Add Buyer Account
+          </button>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Buyer Ref</th>
+                <th>Company Name</th>
+                <th>Contact Person</th>
+                <th>Country</th>
+                <th>Discharge Port</th>
+                <th>Contact Info</th>
+                <th>Business Type</th>
+                <th>Payment Term</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 5: CONTAINER SHIPMENTS & LOGISTICS -->
+      <section class="crm-view-panel" id="view-shipments">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="shipments-search-input" placeholder="Search by booking, container number, BL, port..." />
+          </div>
+          <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewShipmentModal()">
+            <span>+</span> Log New Container Booking
+          </button>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Booking Ref</th>
+                <th>Container No</th>
+                <th>Carrier / Vessel</th>
+                <th>Consignee</th>
+                <th>Route (Loading → Discharge)</th>
+                <th>Cargo / Payload</th>
+                <th>ETD / ETA</th>
+                <th>BL Tracking</th>
+                <th>Milestone Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shipments-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 6: MANDI PROCUREMENT LOG -->
+      <section class="crm-view-panel" id="view-mandi">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="mandi-search-input" placeholder="Search mandi hub, commodity, broker..." />
+          </div>
+          <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewMandiModal()">
+            <span>+</span> Log Mandi Purchase Lot
+          </button>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Lot ID</th>
+                <th>Date</th>
+                <th>APMC Mandi Hub</th>
+                <th>Commodity</th>
+                <th>Grade / Purity</th>
+                <th>Volume (MT)</th>
+                <th>Purchase Rate (INR/Qtl)</th>
+                <th>Sourcing Broker</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="mandi-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 7: COURIER SAMPLE DISPATCH -->
+      <section class="crm-view-panel" id="view-samples">
+        <div class="crm-toolbar">
+          <div class="crm-search-box">
+            <span class="crm-search-icon">🔍</span>
+            <input type="text" id="samples-search-input" placeholder="Search by recipient, country, AWB..." />
+          </div>
+          <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="openNewSampleModal()">
+            <span>+</span> Dispatch Courier Sample
+          </button>
+        </div>
+
+        <div class="crm-table-wrapper">
+          <table class="crm-table">
+            <thead>
+              <tr>
+                <th>Sample ID</th>
+                <th>Dispatch Date</th>
+                <th>Recipient</th>
+                <th>Country</th>
+                <th>Commodities Sampled</th>
+                <th>Courier Provider</th>
+                <th>AWB Tracking No</th>
+                <th>Approval Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="samples-table-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 8: EXPORT CONFIGURATION -->
+      <section class="crm-view-panel" id="view-config">
+        <div class="crm-card" style="max-width: 800px;">
+          <div class="crm-card-header">
+            <h3 class="crm-card-title">
+              <span>🏛️</span> Official Indian Export Registration Profile
+            </h3>
+            <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="saveExportConfig()">
+              Save Changes
+            </button>
+          </div>
+
+          <form id="export-config-form">
+            <div class="crm-form-grid">
+              <div class="crm-form-group">
+                <label class="crm-form-label">Registered Export Entity Name</label>
+                <input type="text" id="cfg-companyName" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">Trade Division / Desk</label>
+                <input type="text" id="cfg-division" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">IEC (Import Export Code)</label>
+                <input type="text" id="cfg-iecNumber" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">APEDA Registration No</label>
+                <input type="text" id="cfg-apedaRegistration" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">Spices Board License No</label>
+                <input type="text" id="cfg-spicesBoardLicense" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">GSTIN / Tax ID</label>
+                <input type="text" id="cfg-gstin" class="crm-form-input" />
+              </div>
+            </div>
+
+            <div class="crm-form-group">
+              <label class="crm-form-label">Export House Registered Address</label>
+              <textarea id="cfg-corporateAddress" class="crm-form-textarea" rows="2"></textarea>
+            </div>
+
+            <h4 style="font-size: 13.5px; font-weight: 700; color: var(--crm-gold); margin: 24px 0 12px;">Authorized Export Proceeds Bank Wire Coordinates</h4>
+            <div class="crm-form-grid">
+              <div class="crm-form-group">
+                <label class="crm-form-label">Bank Name</label>
+                <input type="text" id="cfg-bankName" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">SWIFT / BIC Code</label>
+                <input type="text" id="cfg-swiftCode" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">Account Beneficiary Name</label>
+                <input type="text" id="cfg-accountName" class="crm-form-input" />
+              </div>
+              <div class="crm-form-group">
+                <label class="crm-form-label">Account Number (Export Proceeds)</label>
+                <input type="text" id="cfg-accountNumber" class="crm-form-input" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+
+  <!-- 1. LEAD DETAIL & STATUS MODAL -->
+  <div class="crm-modal-backdrop" id="modal-lead-detail">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title" id="lead-modal-title">Enquiry Details</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-lead-detail')">&times;</button>
+      </div>
+      <div class="crm-modal-body" id="lead-modal-body">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="crm-modal-footer">
+        <button class="crm-btn crm-btn-secondary" onclick="closeModal('modal-lead-detail')">Close</button>
+        <button class="crm-btn crm-btn-primary" id="lead-modal-convert-btn">
+          <span>📝</span> Convert to Proforma Quote
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CREATE NEW LEAD MODAL -->
+  <div class="crm-modal-backdrop" id="modal-new-lead">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Log New Trade Lead</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-new-lead')">&times;</button>
+      </div>
+      <form id="form-new-lead" onsubmit="handleCreateLead(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Buyer Name *</label>
+              <input type="text" id="newlead-name" class="crm-form-input" placeholder="e.g. Tariq Al-Mansoor" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Company Name</label>
+              <input type="text" id="newlead-company" class="crm-form-input" placeholder="e.g. Gulf Trading LLC" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Email Address *</label>
+              <input type="email" id="newlead-email" class="crm-form-input" placeholder="buyer@company.com" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Phone / WhatsApp *</label>
+              <input type="text" id="newlead-phone" class="crm-form-input" placeholder="+971 50 123 4567" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Country</label>
+              <input type="text" id="newlead-country" class="crm-form-input" placeholder="e.g. United Arab Emirates" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Discharge Port</label>
+              <input type="text" id="newlead-port" class="crm-form-input" placeholder="e.g. Jebel Ali, Dubai" />
+            </div>
+          </div>
+          <div class="crm-form-group">
+            <label class="crm-form-label">Subject</label>
+            <input type="text" id="newlead-subject" class="crm-form-input" placeholder="e.g. Whole Cumin Seeds 20 MT Inquiry" />
+          </div>
+          <div class="crm-form-group">
+            <label class="crm-form-label">Commodities &amp; Requirements</label>
+            <textarea id="newlead-message" class="crm-form-textarea" placeholder="Detail specifications, mesh size, packaging, target container volume..."></textarea>
+          </div>
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-new-lead')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Save Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. PROFORMA INVOICE (PI) GENERATOR MODAL -->
+  <div class="crm-modal-backdrop" id="modal-quotation-builder">
+    <div class="crm-modal-card wide">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Export Proforma Invoice Generator</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-quotation-builder')">&times;</button>
+      </div>
+      <form id="form-quotation-builder" onsubmit="handleCreateQuotation(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid-3">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Consignee / Buyer Name *</label>
+              <input type="text" id="pi-buyerName" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Buyer Company *</label>
+              <input type="text" id="pi-buyerCompany" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Buyer Email</label>
+              <input type="email" id="pi-buyerEmail" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Phone / WhatsApp</label>
+              <input type="text" id="pi-buyerPhone" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Destination Country *</label>
+              <input type="text" id="pi-country" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Port of Discharge *</label>
+              <input type="text" id="pi-portOfDischarge" class="crm-form-input" placeholder="e.g. Jebel Ali / Rotterdam" required />
+            </div>
+          </div>
+
+          <div class="crm-form-grid-3">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Port of Loading</label>
+              <select id="pi-portOfLoading" class="crm-form-select">
+                <option value="Nhava Sheva (JNPT, Mumbai)">Nhava Sheva (JNPT, Mumbai)</option>
+                <option value="Mundra Port (Gujarat)">Mundra Port (Gujarat)</option>
+                <option value="Cochin Port (Kerala)">Cochin Port (Kerala)</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Incoterm (2020)</label>
+              <select id="pi-incoterm" class="crm-form-select">
+                <option value="CIF">CIF (Cost, Insurance &amp; Freight)</option>
+                <option value="CFR">CFR (Cost &amp; Freight)</option>
+                <option value="FOB">FOB (Free on Board)</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Container Stuffing Load</label>
+              <input type="text" id="pi-containerType" class="crm-form-input" value="1x 20ft FCL (~18-20 MT)" />
+            </div>
+          </div>
+
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Payment Terms</label>
+              <select id="pi-paymentTerms" class="crm-form-select">
+                <option value="30% Advance T/T, 70% against BL Copy">30% Advance T/T, 70% against Scanned B/L Copy</option>
+                <option value="100% Irrevocable Confirmed L/C at Sight">100% Irrevocable Confirmed L/C at Sight</option>
+                <option value="CAD (Cash Against Documents via Bank)">CAD (Cash Against Documents via Bank)</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Quotation Validity</label>
+              <select id="pi-validityDays" class="crm-form-select">
+                <option value="7">7 Days (Standard Agri Volatility)</option>
+                <option value="14">14 Days</option>
+                <option value="30">30 Days</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Line Items Table -->
+          <div style="margin-top: 18px; border-top: 1px solid var(--crm-card-border); padding-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #ffffff;">Export Line Items (Select From 63 Graded Commodities)</h4>
+              <button type="button" class="crm-btn crm-btn-secondary crm-btn-sm" onclick="addQuotationItemRow()">
+                <span>+</span> Add Line Item
+              </button>
+            </div>
+
+            <table class="crm-items-table">
+              <thead>
+                <tr>
+                  <th style="width: 30%;">Commodity</th>
+                  <th style="width: 20%;">Grade / Spec</th>
+                  <th style="width: 20%;">Packaging Format</th>
+                  <th style="width: 12%;">Qty (MT)</th>
+                  <th style="width: 14%;">Rate/MT (USD)</th>
+                  <th style="width: 4%;"></th>
+                </tr>
+              </thead>
+              <tbody id="pi-items-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Financial Adjustments -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px;">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Ocean Freight Addition (USD)</label>
+              <input type="number" id="pi-freightChargesUSD" class="crm-form-input" value="1400" oninput="calculatePiTotals()" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Marine Cargo Insurance (USD)</label>
+              <input type="number" id="pi-insuranceUSD" class="crm-form-input" value="120" oninput="calculatePiTotals()" />
+            </div>
+          </div>
+
+          <div style="background: #0f1217; padding: 14px 18px; border-radius: 8px; border: 1px solid var(--crm-card-border); margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; color: var(--crm-text-secondary); text-transform: uppercase; font-size: 11px;">Calculated Total Value:</span>
+            <span style="font-size: 20px; font-weight: 800; color: var(--crm-gold);" id="pi-calculated-total-display">$0 USD</span>
+          </div>
+
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-quotation-builder')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Generate &amp; Issue PI</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. PRINTABLE PROFORMA INVOICE (PI) PREVIEW MODAL -->
+  <div class="crm-modal-backdrop" id="modal-pi-preview">
+    <div class="crm-modal-card wide">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Commercial Proforma Invoice Preview</h3>
+        <div style="display: flex; gap: 10px;">
+          <button class="crm-btn crm-btn-primary crm-btn-sm" onclick="window.print()">
+            <span>🖨️</span> Print / Save PDF
+          </button>
+          <button class="crm-modal-close" onclick="closeModal('modal-pi-preview')">&times;</button>
+        </div>
+      </div>
+      <div class="crm-modal-body" style="background: #252830; padding: 30px;">
+        <div id="pi-preview-container" class="proforma-preview-sheet">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. BUYER MODAL -->
+  <div class="crm-modal-backdrop" id="modal-customer">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Add Overseas Importer Account</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-customer')">&times;</button>
+      </div>
+      <form id="form-customer" onsubmit="handleCreateCustomer(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Company Name *</label>
+              <input type="text" id="cust-company" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Contact Person *</label>
+              <input type="text" id="cust-name" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Email</label>
+              <input type="email" id="cust-email" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Phone / WhatsApp</label>
+              <input type="text" id="cust-phone" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Country *</label>
+              <input type="text" id="cust-country" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Primary Destination Port</label>
+              <input type="text" id="cust-port" class="crm-form-input" placeholder="e.g. Jebel Ali, Dubai" />
+            </div>
+          </div>
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Business Type</label>
+              <select id="cust-businessType" class="crm-form-select">
+                <option value="Wholesale Distributor / Importer">Wholesale Distributor / Importer</option>
+                <option value="Supermarket Chain / Grocery Network">Supermarket Chain / Grocery Network</option>
+                <option value="Spice Mill / Food Manufacturer">Spice Mill / Food Manufacturer</option>
+                <option value="Re-Export Trading House">Re-Export Trading House</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Tax / VAT Registration ID</label>
+              <input type="text" id="cust-taxId" class="crm-form-input" placeholder="e.g. DE123456789" />
+            </div>
+          </div>
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-customer')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Save Buyer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. CONTAINER SHIPMENT MODAL -->
+  <div class="crm-modal-backdrop" id="modal-shipment">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Log Container Shipment</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-shipment')">&times;</button>
+      </div>
+      <form id="form-shipment" onsubmit="handleCreateShipment(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Booking Number *</label>
+              <input type="text" id="shp-bookingNumber" class="crm-form-input" placeholder="e.g. MSKU-982144" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Container Number</label>
+              <input type="text" id="shp-containerNumber" class="crm-form-input" placeholder="e.g. MSKU-7482910" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Shipping Line Carrier</label>
+              <select id="shp-shippingLine" class="crm-form-select">
+                <option value="Maersk Line">Maersk Line</option>
+                <option value="MSC (Mediterranean Shipping Co)">MSC</option>
+                <option value="CMA CGM">CMA CGM</option>
+                <option value="Hapag-Lloyd">Hapag-Lloyd</option>
+                <option value="ONE (Ocean Network Express)">ONE</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Buyer / Consignee</label>
+              <input type="text" id="shp-buyerCompany" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Loading Port</label>
+              <select id="shp-loadingPort" class="crm-form-select">
+                <option value="Nhava Sheva (JNPT, Mumbai)">Nhava Sheva (JNPT, Mumbai)</option>
+                <option value="Mundra Port (Gujarat)">Mundra Port (Gujarat)</option>
+                <option value="Cochin Port (Kerala)">Cochin Port (Kerala)</option>
+              </select>
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Discharge Port *</label>
+              <input type="text" id="shp-destinationPort" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Estimated Departure (ETD)</label>
+              <input type="date" id="shp-etd" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Estimated Arrival (ETA)</label>
+              <input type="date" id="shp-eta" class="crm-form-input" />
+            </div>
+          </div>
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Cargo Description</label>
+              <input type="text" id="shp-commoditiesDescription" class="crm-form-input" value="Sortex Cumin & Spices in 25kg Bags" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Net Payload Weight (MT)</label>
+              <input type="number" id="shp-netWeightMT" class="crm-form-input" value="20" />
+            </div>
+          </div>
+          <div class="crm-form-group">
+            <label class="crm-form-label">Initial Milestone Status</label>
+            <select id="shp-status" class="crm-form-select">
+              <option value="Booking Confirmed">Booking Confirmed</option>
+              <option value="Mandi Procured">Mandi Procured</option>
+              <option value="Sortex Lab Passed">Sortex Lab Passed</option>
+              <option value="Stuffing at CFS">Stuffing at CFS</option>
+              <option value="Vessel In-Transit">Vessel In-Transit</option>
+              <option value="Arrived at Destination">Arrived at Destination</option>
+              <option value="Delivered">Delivered</option>
+            </select>
+          </div>
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-shipment')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Save Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. MANDI SOURCING LOT MODAL -->
+  <div class="crm-modal-backdrop" id="modal-mandi">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Log Farmgate Mandi Purchase Lot</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-mandi')">&times;</button>
+      </div>
+      <form id="form-mandi" onsubmit="handleCreateMandi(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">APMC Mandi Hub *</label>
+              <input type="text" id="mnd-mandiHub" class="crm-form-input" placeholder="e.g. Unjha Mandi, Gujarat" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Commodity *</label>
+              <input type="text" id="mnd-commodity" class="crm-form-input" placeholder="e.g. Cumin Seeds (Jeera)" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Grade / Purity Spec</label>
+              <input type="text" id="mnd-varietyGrade" class="crm-form-input" value="Sortex Clean 99.5%" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Lot Volume (MT) *</label>
+              <input type="number" id="mnd-quantityMT" class="crm-form-input" value="20" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Purchase Rate (INR / Quintal)</label>
+              <input type="number" id="mnd-purchasePriceINRPerQuintal" class="crm-form-input" value="24500" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Mandi Commission Broker</label>
+              <input type="text" id="mnd-brokerName" class="crm-form-input" placeholder="e.g. Patel &amp; Sons Sourcing" />
+            </div>
+          </div>
+          <div class="crm-form-group">
+            <label class="crm-form-label">Procurement Milestone</label>
+            <select id="mnd-status" class="crm-form-select">
+              <option value="Procured at Mandi">Procured at Mandi</option>
+              <option value="In-Transit to Warehouse">In-Transit to Warehouse</option>
+              <option value="Sortex Cleaning in Progress">Sortex Cleaning in Progress</option>
+              <option value="Bagged &amp; Quality Certified">Bagged &amp; Quality Certified</option>
+            </select>
+          </div>
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-mandi')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Save Mandi Lot</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. COURIER SAMPLE MODAL -->
+  <div class="crm-modal-backdrop" id="modal-sample">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Dispatch Courier Sample Kit</h3>
+        <button class="crm-modal-close" onclick="closeModal('modal-sample')">&times;</button>
+      </div>
+      <form id="form-sample" onsubmit="handleCreateSample(event)">
+        <div class="crm-modal-body">
+          <div class="crm-form-grid">
+            <div class="crm-form-group">
+              <label class="crm-form-label">Recipient Name *</label>
+              <input type="text" id="smp-recipientName" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Company Name</label>
+              <input type="text" id="smp-company" class="crm-form-input" />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Destination Country *</label>
+              <input type="text" id="smp-country" class="crm-form-input" required />
+            </div>
+            <div class="crm-form-group">
+              <label class="crm-form-label">Courier Service</label>
+              <select id="smp-courierService" class="crm-form-select">
+                <option value="DHL Express Worldwide">DHL Express Worldwide</option>
+                <option value="FedEx Priority">FedEx Priority</option>
+                <option value="Aramex">Aramex</option>
+              </select>
+            </div>
+            <div class="crm-form-group col-span-2">
+              <label class="crm-form-label">AWB Tracking Number</label>
+              <input type="text" id="smp-awbNumber" class="crm-form-input" placeholder="e.g. 9841284910" />
+            </div>
+          </div>
+          <div class="crm-form-group">
+            <label class="crm-form-label">Sample Commodities Included</label>
+            <input type="text" id="smp-items" class="crm-form-input" placeholder="e.g. Cumin Seeds 200g, Turmeric 200g, Red Chilli 200g" />
+          </div>
+        </div>
+        <div class="crm-modal-footer">
+          <button type="button" class="crm-btn crm-btn-secondary" onclick="closeModal('modal-sample')">Cancel</button>
+          <button type="submit" class="crm-btn crm-btn-primary">Record Sample Dispatch</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/crm/crm.js"></script>
+</body>
+</html>
