@@ -1,0 +1,25 @@
+{
+  "companyName": "Wonderx Innovations Private Limited",
+  "division": "Wonderxasia Agri-Export & Automotive Global Desk",
+  "iecNumber": "0312049821",
+  "apedaRegistration": "APEDA/MUM/2026/8941",
+  "spicesBoardLicense": "SB/EXP/2026/4102",
+  "fssaiLicense": "10020021005841",
+  "gstin": "27AAACW9821M1ZX",
+  "corporateAddress": "Wonderx Tower, Nariman Point / Nhava Sheva Trade Corridor, Mumbai - 400021, India",
+  "exportEmail": "export@wonderxasia.com",
+  "deskPhone": "+91 98765 43210",
+  "defaultOriginPorts": [
+    "Nhava Sheva (JNPT, Mumbai)",
+    "Mundra Port (Gujarat)",
+    "Cochin Port (Kerala)"
+  ],
+  "bankDetails": {
+    "bankName": "State Bank of India (SBI) / HDFC Bank Overseas Branch",
+    "branch": "International Banking Division, Nariman Point, Mumbai",
+    "accountName": "Wonderx Innovations Private Limited - Export Proceeds A/C",
+    "accountNumber": "982100412089",
+    "swiftCode": "SBININBB021",
+    "ifscCode": "SBIN0000300"
+  }
+}
